@@ -7,12 +7,13 @@
     "url": "git+https://github.com/bellukki/wetube-reloaded"
   },
   "scripts": {
-    "dev": "nodemon --exec npx babel-node src/server.js"
+    "dev": "nodemon --exec npx babel-node src/init.js"
   },
   "author": "uhori",
   "license": "MIT",
   "dependencies": {
     "express": "^4.18.2",
+    "mongoose": "^8.1.1",
     "morgan": "^1.10.0",
     "pug": "^3.0.2"
   },
