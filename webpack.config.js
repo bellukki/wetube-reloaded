@@ -1,5 +1,4 @@
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-
 const path = require("path");
 
 module.exports = {
@@ -19,21 +18,21 @@ module.exports = {
     path: path.resolve(__dirname, "assets"),
     clean: true,
   },
-};
-module: {
-  rules: [
-    {
-      test: /\.js$/,
-      use: {
-        loader: "babel-loader",
-        options: {
-          presets: [["@babel/preset-env", { targets: "defaults" }]],
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: [["@babel/preset-env", { targets: "defaults" }]],
+          },
         },
       },
-    },
-    {
-      test: /\.scss$/,
-      use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
-    },
-  ];
-}
+      {
+        test: /\.scss$/i,
+        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
+      },
+    ],
+  },
+};
