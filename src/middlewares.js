@@ -21,20 +21,35 @@ export const protectorMiddleware = (req, res, next) => {
   if (req.session.loggedIn) {
     next();
   } else {
+    req.flash("error", "Not authorized");
     return res.redirect("/login");
   }
 };
 
-const multerUploader = multerS3({
+const s3ImageUploader = multerS3({
   s3: s3,
   bucket: "kaleidoscorpio",
   acl: "public-read",
+  key: function (req, file, cb) {
+    cb(null, "images/" + file.originalname);
+  },
+});
+
+const s3VideoUploader = multerS3({
+  s3: s3,
+  bucket: "kaleidoscorpio",
+  acl: "public-read",
+  contentType: multerS3.AUTO_CONTENT_TYPE,
+  key: function (req, file, cb) {
+    cb(null, "videos/" + file.originalname);
+  },
 });
 
 export const publicOnlyMiddleware = (req, res, next) => {
   if (!req.session.loggedIn) {
     return next();
   } else {
+    req.flash("error", "Not authorized");
     return res.redirect("/");
   }
 };
@@ -44,12 +59,13 @@ export const avatarUpload = multer({
   limits: {
     fileSize: 3000000,
   },
-  storage: multerUploader,
+  storage: s3ImageUploader,
 });
+
 export const videoUpload = multer({
   dest: "uploads/videos/",
   limits: {
     fileSize: 17000000,
   },
-  storage: multerUploader,
+  storage: s3VideoUploader,
 });
