@@ -7,12 +7,18 @@
     "url": "git+https://github.com/bellukki/wetube-reloaded"
   },
   "scripts": {
+    "start": "node build/init.js",
+    "build": "npm run build:server && npm run build:assets",
+    "build:server": "babel src -d build --ignore src/client",
+    "build:assets": "webpack --mode=production",
     "dev:server": "nodemon",
-    "dev:assets": "webpack"
+    "dev:assets": "webpack --mode=development -w"
   },
   "author": "bellukki",
   "license": "MIT",
   "dependencies": {
+    "@ffmpeg/core": "^0.12.6",
+    "@ffmpeg/ffmpeg": "^0.12.10",
     "bcrypt": "^5.1.1",
     "connect-mongo": "^5.1.0",
     "dotenv": "^16.4.5",
@@ -26,8 +32,8 @@
     "regenerator-runtime": "^0.14.1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.23.4",
-    "@babel/core": "^7.23.7",
+    "@babel/cli": "^7.23.9",
+    "@babel/core": "^7.24.0",
     "@babel/node": "^7.22.19",
     "@babel/preset-env": "^7.23.8",
     "babel-loader": "^9.1.3",
