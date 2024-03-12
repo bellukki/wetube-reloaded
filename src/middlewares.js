@@ -1,8 +1,8 @@
 import multer from "multer";
 import multerS3 from "multer-s3";
-import * as AWS from "@aws-sdk/client-s3";
+import { S3Client } from "@aws-sdk/client-s3";
 
-const s3 = new AWS.S3({
+const s3 = new S3Client({
   region: "ap-northeast-2",
   credentials: {
     accessKeyId: process.env.AWS_ID,
@@ -12,8 +12,8 @@ const s3 = new AWS.S3({
 
 export const localsMiddleware = (req, res, next) => {
   res.locals.loggedIn = Boolean(req.session.loggedIn);
-  res.locals.siteName = "Wetube";
   res.locals.loggedInUser = req.session.user || {};
+  res.locals.siteName = "Wetube";
   next();
 };
 

@@ -78,12 +78,12 @@ export const postUpload = async (req, res) => {
       title,
       description,
       fileUrl: video[0].path,
-      thumbUrl: thumb[0].path.replace(/[\\]/g, "/"),
+      thumbUrl: thumb[0].path,
       owner: _id,
       hashtags: Video.formatHashtags(hashtags),
     });
     const user = await User.findById(_id);
-    user.videos.unshift(newVideo._id);
+    user.videos.push(newVideo._id);
     user.save();
     return res.redirect("/");
   } catch (error) {
