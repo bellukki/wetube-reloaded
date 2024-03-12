@@ -10,10 +10,32 @@ const s3 = new S3Client({
   },
 });
 
+const s3ImageUploader = multerS3({
+  s3: s3,
+  bucket: "kaleidoscorpio",
+  acl: "public-read",
+  key: function (request, file, ab_callback) {
+    const newFileName = Date.now() + "-" + file.originalname;
+    const fullPath = "images/" + newFileName;
+    ab_callback(null, fullPath);
+  },
+});
+
+const s3VideoUploader = multerS3({
+  s3: s3,
+  bucket: "kaleidoscorpio",
+  acl: "public-read",
+  key: function (request, file, ab_callback) {
+    const newFileName = Date.now() + "-" + file.originalname;
+    const fullPath = "videos/" + newFileName;
+    ab_callback(null, fullPath);
+  },
+});
+
 export const localsMiddleware = (req, res, next) => {
   res.locals.loggedIn = Boolean(req.session.loggedIn);
-  res.locals.loggedInUser = req.session.user || {};
   res.locals.siteName = "Wetube";
+  res.locals.loggedInUser = req.session.user || {};
   next();
 };
 
@@ -25,25 +47,6 @@ export const protectorMiddleware = (req, res, next) => {
     return res.redirect("/login");
   }
 };
-
-const s3ImageUploader = multerS3({
-  s3: s3,
-  bucket: "kaleidoscorpio",
-  acl: "public-read",
-  key: function (req, file, cb) {
-    cb(null, "images/" + file.originalname);
-  },
-});
-
-const s3VideoUploader = multerS3({
-  s3: s3,
-  bucket: "kaleidoscorpio",
-  acl: "public-read",
-  contentType: multerS3.AUTO_CONTENT_TYPE,
-  key: function (req, file, cb) {
-    cb(null, "videos/" + file.originalname);
-  },
-});
 
 export const publicOnlyMiddleware = (req, res, next) => {
   if (!req.session.loggedIn) {
