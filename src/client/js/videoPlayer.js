@@ -56,12 +56,6 @@ const formatTime = (seconds) =>
 const handleLoadedMetadata = () => {
   totalTime.innerText = formatTime(Math.floor(video.duration));
   timeline.max = Math.floor(video.duration);
-  if (video.readyState >= 2) {
-    getmetadata();
-  }
-  function getmetadata() {
-    handleLoadedMetadata();
-  }
 };
 
 const handleTimeUpdate = () => {
@@ -117,6 +111,20 @@ const handleEnded = () => {
   fetch(`/api/videos/${id}/view`, { method: "POST" });
 };
 
+document.addEventListener("keyup", (event) => {
+  if (event.target === document.body && event.code === "Space") {
+    handlePlayClick();
+  } else if (event.target === document.body && event.key === "f") {
+    handleFullscreen();
+  } else if (event.target === document.body && event.key === "m") {
+    handleMute();
+  } else if (event.target === document.body && event.code === "ArrowRight") {
+    changeVideoTime(5);
+  } else if (event.target === document.body && event.code === "ArrowLeft") {
+    changeVideoTime(-5);
+  }
+});
+
 playBtn.addEventListener("click", handlePlayClick);
 muteBtn.addEventListener("click", handleMute);
 volumeRange.addEventListener("input", handleVolumeChange);
@@ -128,16 +136,3 @@ videoContainer.addEventListener("mouseleave", handleMouseLeave);
 timeline.addEventListener("input", handleTimeChange);
 fullScreenBtn.addEventListener("click", handleFullscreen);
 video.addEventListener("click", handleVideoClickPlay);
-document.addEventListener("keyup", (event) => {
-  if (event.code === "Space") {
-    handlePlayClick();
-  } else if (event.key === "f") {
-    handleFullscreen();
-  } else if (event.key === "m") {
-    handleMute();
-  } else if (event.code === "ArrowRight") {
-    changeVideoTime(5);
-  } else if (event.code === "ArrowLeft") {
-    changeVideoTime(-5);
-  }
-});
