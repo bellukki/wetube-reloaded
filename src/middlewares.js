@@ -25,6 +25,7 @@ const s3VideoUploader = multerS3({
   s3: s3,
   bucket: "kaleidoscorpio",
   acl: "public-read",
+  contentType: multerS3.AUTO_CONTENT_TYPE,
   key: function (request, file, ab_callback) {
     const newFileName = Date.now() + "-" + file.originalname;
     const fullPath = "videos/" + newFileName;
@@ -34,7 +35,7 @@ const s3VideoUploader = multerS3({
 
 export const localsMiddleware = (req, res, next) => {
   res.locals.loggedIn = Boolean(req.session.loggedIn);
-  res.locals.siteName = "Wetube";
+  res.locals.siteName = "Kaleidoscorpio";
   res.locals.loggedInUser = req.session.user || {};
   next();
 };
@@ -68,7 +69,7 @@ export const avatarUpload = multer({
 export const videoUpload = multer({
   dest: "uploads/videos/",
   limits: {
-    fileSize: 17000000,
+    fileSize: 20000000,
   },
   storage: s3VideoUploader,
 });

@@ -86,13 +86,13 @@ const handleStart = () => {
   recorder.start();
   setTimeout(() => {
     recorder.stop();
-  }, 2500);
+  }, 5000);
 };
 
 const init = async () => {
   stream = await navigator.mediaDevices.getUserMedia({
     audio: true,
-    video: { width: 1024, height: 576 },
+    video: { width: 512, height: 288 },
   });
   video.srcObject = stream;
   video.play();

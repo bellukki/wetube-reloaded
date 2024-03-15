@@ -1,20 +1,39 @@
 const videoContainer = document.getElementById("videoContainer");
 const form = document.getElementById("commentForm");
+const delComment = document.querySelectorAll(".delComment");
+const videoId = videoContainer.dataset.id;
 
-const addComment = (text, id) => {
+const handleDelete = async (event) => {
+  const comment = event.target.parentElement;
+  const commentId = comment.dataset.id;
+  console.log(commentId);
+  const response = await fetch(`/api/videos/${videoId}/comment`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ commentId }),
+  });
+  if (response.status === 200) {
+    comment.remove();
+  }
+};
+
+const addComment = (text, id, user) => {
   const videoComments = document.querySelector(".video__comments ul");
   const newComment = document.createElement("li");
   newComment.dataset.id = id;
   newComment.className = "video__comment";
-  const icon = document.createElement("i");
-  icon.className = "fas fa-comment";
+  const owner = document.createElement("span");
+  owner.innerText = `${user} : `;
   const span = document.createElement("span");
-  span.innerText = ` ${text}`;
-  const span2 = document.createElement("span");
-  span2.innerText = "❌";
-  newComment.appendChild(icon);
+  span.innerText = ` ${text.replace(/\n/g, "")}`;
+  const delBtn = document.createElement("i");
+  delBtn.className = "fas fa-xmark";
+  delBtn.addEventListener("click", handleDelete);
+  newComment.appendChild(owner);
   newComment.appendChild(span);
-  newComment.appendChild(span2);
+  newComment.appendChild(delBtn);
   videoComments.prepend(newComment);
 };
 
@@ -22,7 +41,6 @@ const handleSubmit = async (event) => {
   event.preventDefault();
   const textarea = form.querySelector("textarea");
   const text = textarea.value;
-  const videoId = videoContainer.dataset.id;
   if (text === "") {
     return;
   }
@@ -35,11 +53,14 @@ const handleSubmit = async (event) => {
   });
   if (response.status === 201) {
     textarea.value = "";
-    const { newCommentId } = await response.json();
-    addComment(text, newCommentId);
+    const { newCommentId, userId } = await response.json();
+    addComment(text, newCommentId, userId);
   }
 };
 
 if (form) {
   form.addEventListener("submit", handleSubmit);
+  delComment.forEach((btn) => {
+    btn.addEventListener("click", handleDelete);
+  });
 }

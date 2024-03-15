@@ -20,12 +20,14 @@ export const postJoin = async (req, res) => {
     });
   }
   try {
+    const defaultAvatar = "../public/android-chrome-192x192.png";
     await User.create({
       name,
       username,
       email,
       password,
       location,
+      avatarUrl: defaultAvatar,
     });
     return res.redirect("/login");
   } catch (error) {
@@ -58,6 +60,7 @@ export const postLogin = async (req, res) => {
   }
   req.session.loggedIn = true;
   req.session.user = user;
+  req.flash("success", "Logged In");
   return res.redirect("/");
 };
 
@@ -99,7 +102,6 @@ export const finishGithubLogin = async (req, res) => {
         },
       })
     ).json();
-    console.log(userData);
     const emailData = await (
       await fetch(`${apiUrl}/user/emails`, {
         headers: {
@@ -127,13 +129,16 @@ export const finishGithubLogin = async (req, res) => {
     }
     req.session.loggedIn = true;
     req.session.user = user;
+    req.flash("success", "Logged In");
     return res.redirect("/");
   } else {
     return res.redirect("/login");
   }
 };
 export const logout = (req, res) => {
-  req.session.destroy();
+  req.session.user = null;
+  req.session.loggedIn = false;
+  req.flash("info", "Logged Out");
   return res.redirect("/");
 };
 

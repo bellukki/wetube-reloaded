@@ -111,6 +111,11 @@ const handleEnded = () => {
   fetch(`/api/videos/${id}/view`, { method: "POST" });
 };
 
+window.addEventListener("keydown", function (event) {
+  if (event.code === "Space" && event.target === document.body) {
+    event.preventDefault();
+  }
+});
 document.addEventListener("keyup", (event) => {
   if (event.target === document.body && event.code === "Space") {
     handlePlayClick();
@@ -128,7 +133,7 @@ document.addEventListener("keyup", (event) => {
 playBtn.addEventListener("click", handlePlayClick);
 muteBtn.addEventListener("click", handleMute);
 volumeRange.addEventListener("input", handleVolumeChange);
-video.addEventListener("loadeddata", handleLoadedMetadata);
+video.addEventListener("loadedmetadata", handleLoadedMetadata);
 video.addEventListener("timeupdate", handleTimeUpdate);
 video.addEventListener("ended", handleEnded);
 videoContainer.addEventListener("mousemove", handleMouseMove);
