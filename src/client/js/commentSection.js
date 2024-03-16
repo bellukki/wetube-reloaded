@@ -26,8 +26,9 @@ const addComment = (text, id, user, url) => {
   const profile = document.createElement("img");
   profile.className = "avatar__sm";
   profile.src = `${url}`;
+  profile.setAttribute("crossorigin", "anonymous");
   const owner = document.createElement("span");
-  owner.innerText = `${user} : `;
+  owner.innerText = `${user}: `;
   const span = document.createElement("span");
   span.innerText = ` ${text.replace(/\n/g, "")}`;
   const delBtn = document.createElement("i");

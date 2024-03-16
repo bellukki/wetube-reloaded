@@ -54,8 +54,14 @@ const formatTime = (seconds) =>
   new Date(seconds * 1000).toISOString().substring(14, 19);
 
 const handleLoadedMetadata = () => {
-  totalTime.innerText = formatTime(Math.floor(video.duration));
-  timeline.max = Math.floor(video.duration);
+  try {
+    totalTime.innerText = formatTime(Math.floor(video.duration));
+    timeline.max = Math.floor(video.duration);
+  } catch (error) {
+    console.log(error);
+    req.flash("error", "Video not loaded");
+    return res.sendStatus(403);
+  }
 };
 
 const handleTimeUpdate = () => {
