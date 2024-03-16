@@ -53,15 +53,12 @@ const handleVolumeChange = (event) => {
 const formatTime = (seconds) =>
   new Date(seconds * 1000).toISOString().substring(14, 19);
 
+video.addEventListener("loadedmetadata", () => {
+  timeline.max = Math.floor(video.duration);
+});
+
 const handleLoadedMetadata = () => {
-  try {
-    totalTime.innerText = formatTime(Math.floor(video.duration));
-    timeline.max = Math.floor(video.duration);
-  } catch (error) {
-    console.log(error);
-    req.flash("error", "Video not loaded");
-    return res.sendStatus(403);
-  }
+  totalTime.innerText = formatTime(Math.floor(video.duration));
 };
 
 const handleTimeUpdate = () => {
