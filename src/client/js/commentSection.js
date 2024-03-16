@@ -6,7 +6,6 @@ const videoId = videoContainer.dataset.id;
 const handleDelete = async (event) => {
   const comment = event.target.parentElement;
   const commentId = comment.dataset.id;
-  console.log(commentId);
   const response = await fetch(`/api/videos/${videoId}/comment`, {
     method: "DELETE",
     headers: {
@@ -19,11 +18,14 @@ const handleDelete = async (event) => {
   }
 };
 
-const addComment = (text, id, user) => {
+const addComment = (text, id, user, url) => {
   const videoComments = document.querySelector(".video__comments ul");
   const newComment = document.createElement("li");
   newComment.dataset.id = id;
   newComment.className = "video__comment";
+  const profile = document.createElement("img");
+  profile.className = "avatar__sm";
+  profile.src = `${url}`;
   const owner = document.createElement("span");
   owner.innerText = `${user} : `;
   const span = document.createElement("span");
@@ -31,6 +33,7 @@ const addComment = (text, id, user) => {
   const delBtn = document.createElement("i");
   delBtn.className = "fas fa-xmark";
   delBtn.addEventListener("click", handleDelete);
+  newComment.appendChild(profile);
   newComment.appendChild(owner);
   newComment.appendChild(span);
   newComment.appendChild(delBtn);
@@ -40,7 +43,7 @@ const addComment = (text, id, user) => {
 const handleSubmit = async (event) => {
   event.preventDefault();
   const textarea = form.querySelector("textarea");
-  const text = textarea.value;
+  const text = textarea.value.trim();
   if (text === "") {
     return;
   }
@@ -53,8 +56,8 @@ const handleSubmit = async (event) => {
   });
   if (response.status === 201) {
     textarea.value = "";
-    const { newCommentId, userId } = await response.json();
-    addComment(text, newCommentId, userId);
+    const { newCommentId, userId, userAvatar } = await response.json();
+    addComment(text, newCommentId, userId, userAvatar);
   }
 };
 

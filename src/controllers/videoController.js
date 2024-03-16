@@ -167,7 +167,11 @@ export const createComment = async (req, res) => {
   userObj.save();
   return res
     .status(201)
-    .json({ newCommentId: comment._id, userId: userObj.username });
+    .json({
+      newCommentId: comment._id,
+      userId: userObj.username,
+      userAvatar: userObj.avatarUrl,
+    });
 };
 
 export const deleteComment = async (req, res) => {
