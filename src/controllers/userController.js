@@ -20,7 +20,7 @@ export const postJoin = async (req, res) => {
     });
   }
   try {
-    const defaultAvatar = "../public/android-chrome-192x192.png";
+    const defaultAvatar = "/public/android-chrome-192x192.png";
     await User.create({
       name,
       username,

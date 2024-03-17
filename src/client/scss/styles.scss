@@ -1,4 +1,5 @@
 @import url("https://hangeul.pstatic.net/hangeul_static/css/nanum-square-round.css");
+@import url("https://hangeul.pstatic.net/hangeul_static/css/nanum-gothic-coding.css");
 // Config
 @import "./config/_variables.scss";
 @import "./config/_reset.scss";
@@ -21,6 +22,9 @@
 @import "./screens/watch.scss";
 
 // Defaults
+html {
+  font-size: 13px;
+}
 a {
   color: inherit;
   text-decoration: none;

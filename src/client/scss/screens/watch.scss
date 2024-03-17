@@ -19,6 +19,7 @@
     border: 1px solid rgba(220, 220, 220, 0.452);
     border-radius: 8px;
     padding: 5px;
+    font-family: $fontM;
     .video__head {
       display: flex;
       align-items: center;
@@ -28,7 +29,6 @@
         justify-content: center;
         a {
           padding: 2% 0;
-          font-family: $fontB;
           font-weight: 600;
           font-size: 1.2rem;
           text-decoration: underline;
@@ -99,7 +99,7 @@
       display: flex;
       align-items: center;
       font-family: $fontM;
-      font-size: 0.9rem;
+      font-size: 1rem;
       font-weight: 400;
       padding: 15px;
       border: 1px solid rgba(255, 255, 255, 0.822);
