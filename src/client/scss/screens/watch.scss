@@ -27,13 +27,15 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
+        padding-left: 2%;
         a {
           padding: 2% 0;
           font-weight: 600;
-          font-size: 1.2rem;
+          font-size: 1.5rem;
           text-decoration: underline;
         }
         small {
+          text-wrap: nowrap;
           font-size: 0.8rem;
         }
       }
@@ -42,7 +44,7 @@
   .video__setting {
     display: flex;
     flex-direction: column;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     justify-content: space-between;
     width: 15%;
     .setting__btn {
@@ -67,14 +69,14 @@
 }
 
 .video__desc {
-  font-family: $fontEB;
-  font-size: 1.2rem;
+  font-family: $fontM;
+  font-size: 1.3rem;
   background-color: rgba(220, 220, 220, 0.452);
   border-radius: 8px;
   padding: 1%;
   small {
     padding: 1% 0;
-    font-family: $fontM;
+    font-family: $fontL;
     font-size: 0.9rem;
     font-weight: 600;
   }
@@ -114,6 +116,9 @@
           cursor: pointer;
         }
       }
+    }
+    .video__comment > * {
+      padding: 0 2px;
     }
   }
 }
