@@ -49,7 +49,6 @@ export const postEdit = async (req, res) => {
   const { id } = req.params;
   const { title, description, hashtags } = req.body;
   const video = await Video.findById(id);
-  const user = await User.findById(_id);
   if (!video) {
     return res.status(404).render("404", { pageTitle: "Video not found." });
   }
@@ -62,8 +61,6 @@ export const postEdit = async (req, res) => {
     description,
     hashtags: Video.formatHashtags(hashtags),
   });
-  user.videos.splice(user.videos.indexOf(id), 1);
-  user.save();
   req.flash("success", "Changes saved.");
   return res.redirect(`/videos/${id}`);
 };
@@ -106,6 +103,7 @@ export const deleteVideo = async (req, res) => {
     user: { _id },
   } = req.session;
   const video = await Video.findById(id);
+  const user = await User.findById(_id);
   if (!video) {
     return res.status(404).render("404", { pageTitle: "Video not found." });
   }
@@ -114,6 +112,8 @@ export const deleteVideo = async (req, res) => {
     return res.status(403).redirect("/");
   }
   await Video.findByIdAndDelete(id);
+  user.videos.splice(user.videos.indexOf(id), 1);
+  user.save();
   req.flash("success", "Video deleted");
   return res.redirect("/");
 };
