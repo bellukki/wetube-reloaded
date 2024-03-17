@@ -6,7 +6,7 @@ block content
         img(src=user.avatarUrl, crossorigin="anonymous").avatar
         h3=user.name 
     hr
-    div.video-grid 
+    div.video__grid 
         each video in user.videos
             +video(video)
         else 

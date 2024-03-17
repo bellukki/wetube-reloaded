@@ -1,5 +1,18 @@
 // video mixin
+.video__grid {
+  display: grid;
+  padding: 1% 2%;
+  height: 100%;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  grid-auto-columns: 1fr;
+  grid-template-rows: repeat(auto-fill, minmax(200px, 1fr));
+  grid-auto-rows: 1fr;
+  gap: 2%;
+}
+
 .video-mixin {
+  padding: 1% 2%;
+  font-family: $fontB;
   .video-mixin__thumb {
     height: 140px;
     border-radius: 7px;
@@ -7,14 +20,19 @@
     background-color: ivory;
   }
   .video-mixin__data {
-    padding: 0px 15px;
+    padding: 2px 0;
+    border-radius: 8px;
+    color: black;
     .video-mixin__title {
+      font-weight: 600;
       font-size: 18px;
       display: block;
-      margin-top: 10px;
+      margin-top: 5px;
     }
     .video-mixin__meta {
-      margin-top: 5px;
+      display: flex;
+      align-items: center;
+      margin: 5px 0;
       font-size: 12px;
     }
   }

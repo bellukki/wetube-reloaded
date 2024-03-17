@@ -1,50 +1,66 @@
 extends base
 
 block content
-    div#videoContainer(data-id=video._id)
-        video(src=video.fileUrl, crossorigin="anonymous")
-        div#videoControls.videoControls
-            div.videoControls__play
-                span#play.videoControls__playBtn
-                    i.fas.fa-play
-                div.videoControls__time
-                    span#currenTime 00:00
-                    span  / 
-                    span#totalTime 00:00
-            input(type="range",step="1", value="0", min="0")#timeline.videoControls__timeline
-            div.videoControls__volume
-                input(type="range",step="0.1", value=0.5, min="0", max="1")#volume
-                span#mute
-                    i.fas.fa-volume-up
-            div 
-                span#fullScreen
-                    i.fas.fa-expand
-    div.video__data
-        p.video__title=video.title
-        small.video__owner Uploaded by 
-            img(src=video.owner.avatarUrl, crossorigin="anonymous").avatar__sm
-            a(href=`/users/${video.owner._id}`)=video.owner.name
-        small.video__createdAt=new Date(video.createdAt).toLocaleDateString("ko-kr", {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})
-        if String(video.owner._id) === String(loggedInUser._id)
-            br
-            a(href=`${video.id}/edit`) Edit Video &rarr;
-            br
-            a(href=`${video.id}/delete`) Delete Video &rarr;
+    div.watch
+        div#videoContainer(data-id=video._id)
+            video(src=video.fileUrl, crossorigin="anonymous")
+            div#videoControls.videoControls
+                div.videoControls__play
+                    span#play.videoControls__playBtn
+                        i.fas.fa-play
+                    div.videoControls__time
+                        span#currenTime 00:00
+                        |/
+                        span#totalTime 00:00
+                input(type="range",step="1", value="0", min="0")#timeline.videoControls__timeline
+                div.videoControls__volume
+                    input(type="range",step="0.1", value=0.5, min="0", max="1")#volume
+                    span#mute
+                        i.fas.fa-volume-up
+                div 
+                    span#fullScreen
+                        i.fas.fa-expand
+        div.video__data
+            p.video__title=video.title
+            div.video__owner
+                div.video__head
+                    img(src=video.owner.avatarUrl, crossorigin="anonymous").avatar__pf
+                    div.video__meta
+                        a(href=`/users/${video.owner._id}`)=video.owner.name 
+                        div
+                            small.video__createdAt=new Date(video.createdAt).toLocaleDateString("ko-kr", {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})
+                            if video.meta.views <= 1 
+                                small=` • ${video.meta.views} view`
+                            else if video.meta.views > 1
+                                small=` • ${video.meta.views} views`
+                if String(video.owner._id) === String(loggedInUser._id)
+                    div.video__setting
+                        a(href=`${video.id}/edit`).setting__btn 
+                            i.fas.fa-edit 
+                            |  Edit Video
+                        a(href=`${video.id}/delete`).setting__btn
+                            i.fas.fa-trash-can 
+                            |  Delete Video
+            div.video__desc
+                p=video.description
+                if video.hashtags
+                    each hashtag in video.hashtags
+                        small #{hashtag} 
 
-    if loggedIn
-        div.video__add-comments
-            form.video__comment-form#commentForm
-                textarea(cols="30", rows="3", placeholder="Write a nice commment...")
-                button Add Comment
-    div.video__comments
-        ul 
-            each comment in video.comments.reverse()
-                li.video__comment(data-id=comment._id)
-                    img(src=comment.owner.avatarUrl, crossorigin="anonymous").avatar__sm
-                    span #{comment.owner.username}: 
-                    span  #{comment.text}
-                    if loggedIn && String(comment.owner._id) === String(loggedInUser._id)
-                        i.delComment.fas.fa-xmark
+        if loggedIn
+            div.video__add-comments
+                form.video__comment-form#commentForm
+                    textarea(cols="30", rows="3", placeholder="Write a nice commment...")
+                    button.social__btn Add Comment
+        div.video__comments
+            ul 
+                each comment in video.comments.reverse()
+                    li.video__comment(data-id=comment._id)
+                        img(src=comment.owner.avatarUrl, crossorigin="anonymous").avatar__sm
+                        span #{comment.owner.username}:  
+                        span #{comment.text}
+                        if loggedIn && String(comment.owner._id) === String(loggedInUser._id)
+                            i.delComment.fas.fa-delete-left
 
 block scripts
     script(src="/static/js/videoPlayer.js")

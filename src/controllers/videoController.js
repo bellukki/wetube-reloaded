@@ -165,13 +165,11 @@ export const createComment = async (req, res) => {
   video.save();
   userObj.comments.push(comment._id);
   userObj.save();
-  return res
-    .status(201)
-    .json({
-      newCommentId: comment._id,
-      userId: userObj.username,
-      userAvatar: userObj.avatarUrl,
-    });
+  return res.status(201).json({
+    newCommentId: comment._id,
+    userId: userObj.username,
+    userAvatar: userObj.avatarUrl,
+  });
 };
 
 export const deleteComment = async (req, res) => {

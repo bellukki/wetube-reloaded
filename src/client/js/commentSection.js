@@ -32,7 +32,7 @@ const addComment = (text, id, user, url) => {
   const span = document.createElement("span");
   span.innerText = ` ${text.replace(/\n/g, "")}`;
   const delBtn = document.createElement("i");
-  delBtn.className = "fas fa-xmark";
+  delBtn.className = "fas fa-delete-left";
   delBtn.addEventListener("click", handleDelete);
   newComment.appendChild(profile);
   newComment.appendChild(owner);

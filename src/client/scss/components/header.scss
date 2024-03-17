@@ -1,11 +1,15 @@
 header {
-  padding: 20px 50px;
+  font-family: $fontEB;
+  padding: 1% 2%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  .header__logo {
-    color: $red;
-    font-size: 38px;
+  background-color: rgba(0, 0, 0, 0.295);
+  a {
+    height: 70px;
+    img {
+      height: 100%;
+    }
   }
   ul {
     display: flex;

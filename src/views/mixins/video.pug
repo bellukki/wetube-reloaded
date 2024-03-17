@@ -5,5 +5,9 @@ mixin video(video)
         div.video-mixin__data
             span.video-mixin__title=video.title
             div.video-mixin__meta
-                span #{video.owner.name || user.username} • 
-                span #{video.meta.views} 회
+                img(src=video.owner.avatarUrl, crossorigin="anonymous").avatar__sm
+                span #{video.owner.name || user.username}&nbsp;
+                if video.meta.views <= 1 
+                    small=` • ${video.meta.views} view`
+                else if video.meta.views > 1
+                    small=` • ${video.meta.views} views`
