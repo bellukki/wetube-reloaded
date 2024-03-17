@@ -98,7 +98,8 @@
   ul {
     width: 100%;
     .video__comment {
-      display: flex;
+      display: grid;
+      grid-template-columns: 2% 7% 10% 1fr 5%;
       align-items: center;
       font-family: $fontM;
       font-size: 1rem;
@@ -109,8 +110,11 @@
       background-color: rgba(255, 255, 255, 0.705);
       color: black;
       margin-bottom: 10px;
+      span {
+        word-break: break-all;
+      }
       i {
-        position: absolute;
+        grid-column: -1/-1;
         right: 13%;
         &:hover {
           cursor: pointer;
