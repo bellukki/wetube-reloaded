@@ -99,23 +99,41 @@
     width: 100%;
     .video__comment {
       display: grid;
-      grid-template-columns: 2% 7% 1fr 5%;
+      grid-template-columns: 30px 1fr 5%;
       align-items: center;
       font-family: $fontM;
       font-size: 1rem;
       font-weight: 400;
-      padding: 15px;
+      padding: 13px;
       border: 1px solid rgba(255, 255, 255, 0.822);
       border-radius: 9999px;
       background-color: rgba(255, 255, 255, 0.705);
       color: black;
       margin-bottom: 10px;
-      span {
-        word-break: break-all;
+      div {
+        display: flex;
+        flex-direction: column;
+        padding: 0 10px;
+        span:first-child {
+          color: darkslategrey;
+          font-weight: 600;
+          font-family: $fontEB;
+          padding-bottom: 2px;
+          font-size: 0.9rem;
+        }
+        span:last-child {
+          font-weight: 400;
+          font-family: $fontL;
+          font-size: 1.1rem;
+        }
+      }
+      .avatar__sm {
+        width: 1.8rem;
+        height: 1.8rem;
       }
       i {
+        text-align: center;
         grid-column: -1/-1;
-        right: 13%;
         &:hover {
           cursor: pointer;
         }

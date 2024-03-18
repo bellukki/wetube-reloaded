@@ -57,8 +57,9 @@ block content
                 each comment in video.comments.reverse()
                     li.video__comment(data-id=comment._id)
                         img(src=comment.owner.avatarUrl, crossorigin="anonymous").avatar__sm
-                        span #{comment.owner.username}:  
-                        span #{comment.text}
+                        div
+                            a(href=`/users/${comment.owner._id}`)=comment.owner.username
+                            span #{comment.text}
                         if loggedIn && String(comment.owner._id) === String(loggedInUser._id)
                             i.delComment.fas.fa-delete-left
 
